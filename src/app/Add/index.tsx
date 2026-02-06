@@ -34,7 +34,6 @@ export function Add({navigation}: BottomRoutesProps<'add'>) {
             }
             console.log(item);            
             await ItemStorage.add(item);
-            console.log("veio aqui");
             const items = await ItemStorage.get();
             console.log(items);
             navigation.navigate('home')

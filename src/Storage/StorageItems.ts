@@ -32,7 +32,6 @@ export async function save(items: ItemStorageType[]) {
 export async function add(item: ItemStorageType) {
     try {
         const items = await get();
-        console.log(items);
         const itemsUpdated = [...items, item];
         await save(itemsUpdated);
     } catch (error) {

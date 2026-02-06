@@ -10,8 +10,7 @@ export const styles = StyleSheet.create({
         width: "100%",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 24, 
+        alignItems: "center", 
         backgroundColor: "#ffffff",
         padding: 20,
         borderBottomWidth: 1,
@@ -25,5 +24,17 @@ export const styles = StyleSheet.create({
     headerContent: {
         alignItems: "center",
         gap: 8,
+    },
+
+    emptyContainer: {
+        flex: 1,
+        marginTop: -50,
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 20,
+    },
+    empty: {
+        fontSize: 16,
+        color: '#666',
     },
 });

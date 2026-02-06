@@ -4,15 +4,16 @@ import { MaterialIcons } from '@expo/vector-icons';
 type Props = TouchableOpacityProps & {
     name: keyof typeof MaterialIcons.glyphMap;
     color?: string;
+    size?: number;
 }
 
-export function Button({ name, color, ...rest }: Props) {
+export function Button({ name, color, size, ...rest }: Props) {
     return (
         <TouchableOpacity {...rest}>
             <MaterialIcons 
-                name={name} 
-                size={24}  
+                name={name}   
                 color={color}
+                size={size}
             />
         </TouchableOpacity>
     );
