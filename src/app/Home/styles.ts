@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
 
     emptyContainer: {
         flex: 1,
-        marginTop: -50,
+        marginTop: -60,
         alignItems: "center",
         justifyContent: "center",
         gap: 20,
@@ -37,4 +37,8 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         color: '#666',
     },
+    filters: {
+        flexDirection: 'row',
+        gap: 10,
+    }
 });

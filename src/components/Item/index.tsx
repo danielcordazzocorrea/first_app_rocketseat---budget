@@ -1,22 +1,27 @@
-import { View, Text, TouchableOpacityProps } from 'react-native'
+import { View, Text, TouchableOpacityProps, TouchableOpacity } from 'react-native'
 import { Button } from '../Button'
 import { styles } from './styles'
+import { StatusIcon } from '../StatusIcon'
+import { StatusBudget } from '@/types/StatusBudget';
 
 type Props = TouchableOpacityProps & {
     name: string;
     quantity: number;
     discount: number;
     freight: number;
+    status: StatusBudget;
     onDelete: () => void;
     onStatusChange: () => void;
     onEdit: () => void;
 }
 
-export function Item({name, quantity, discount, freight, onDelete, onEdit, onStatusChange}: Props) {
+export function Item({name, quantity, discount, freight, status, onDelete, onEdit, onStatusChange}: Props) {
     return (
         <View style={styles.container}>
             <View>
-                 <Button name='radio-button-unchecked' color='black' onPress={onStatusChange} size={30}/>
+                 <TouchableOpacity onPress={onStatusChange}>
+                     <StatusIcon status={status}/>
+                 </TouchableOpacity>
                 <Text style={styles.name}>{name}</Text>
                 <Text>Quantidade: {quantity}</Text>
                 <Text>Desconto: {discount}</Text>

@@ -44,6 +44,24 @@ export async function remove(id: string) {
         const items = await get();
         const itemsUpdated = items.filter(item => item.id !== id);
         await save(itemsUpdated);
+        return itemsUpdated;
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function change(updatedItem: ItemStorageType) {
+    try {
+        const items = await get();
+        const newitems = await remove(updatedItem.id);
+        if (updatedItem.status === StatusBudget.PENDING) {
+            updatedItem.status = StatusBudget.SENT;
+        } else {
+            updatedItem.status = StatusBudget.PENDING;
+        }
+        const itemsUpdated = [...newitems, updatedItem];
+        await save(itemsUpdated);
+
     } catch (error) {
         throw error;
     }
@@ -53,4 +71,5 @@ export const ItemStorage = {
     get,
     add,
     remove,
+    change,
 }

@@ -5,15 +5,20 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Item } from "@/components/Item";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from '@react-navigation/native';
+import { Filter } from "@/components/Filter";
 
 import { styles } from "./styles";  
 
 import { BottomRoutesProps } from "@/routes/BottomRoutes";
 import { ItemStorage, ItemStorageType } from "@/Storage/StorageItems";
+import { StatusBudget } from "@/types/StatusBudget";
+
+const FILTER_STATUS: StatusBudget[] = [ StatusBudget.PENDING, StatusBudget.SENT ];
 
 export function Home({navigation}: BottomRoutesProps<'home'>) {
 
     const [items, setItems] = useState<ItemStorageType[]>([]);
+    const [activeFilter, setActiveFilter] = useState<StatusBudget | null>(StatusBudget.PENDING);
 
     async function getItems() {
         try {
@@ -33,6 +38,15 @@ export function Home({navigation}: BottomRoutesProps<'home'>) {
         }
     }
 
+    async function onStatusChange(item: ItemStorageType) {
+        try {
+            await ItemStorage.change(item);
+            getItems();
+        } catch (error) {
+            console.error("Erro ao alterar o status do item:", error);
+        }
+    }
+
     useFocusEffect(
         useCallback(() => {
             getItems();
@@ -48,25 +62,34 @@ export function Home({navigation}: BottomRoutesProps<'home'>) {
                 </View>
                 <AddProduct title="Novo" onPress={() => navigation.navigate('add')}/>
             </View>
+            <View style={styles.filters}>
+                {FILTER_STATUS.map((status) => (
+                    <Filter 
+                        key={status}
+                        status={status}
+                        isActive={status === activeFilter}
+                        onPress={() => setActiveFilter(status)}
+                    />
+                ))}
+            </View>
             <FlatList
-                data={items}
+                data={items.filter(item => item.status === activeFilter)}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => 
                 <Item 
-                name={item.name}
-                quantity={item.quantity}
-                discount={item.discount}
-                freight={item.freight} 
-                onDelete={() => onRemove(item.id)} 
-                onStatusChange={() => console.log("Status")}
-                onEdit={() => console.log("Editar")}
+                    name={item.name}
+                    quantity={item.quantity}
+                    discount={item.discount}
+                    freight={item.freight} 
+                    onDelete={() => onRemove(item.id)} 
+                    onStatusChange={() => onStatusChange(item)}
+                    onEdit={() => console.log("Editar")}
+                    status={item.status}
                 />}
                 contentContainerStyle={[{ padding: 20}, items.length === 0 && { flex: 1, justifyContent: 'center', alignItems: 'center' }]}
                 ListEmptyComponent={() => 
-                    <View style={styles.emptyContainer}>
                         <Text style={styles.empty}>Nenhum item aqui!</Text>
-                        <AddProduct title="Adicionar Item" onPress={() => navigation.navigate('add')}/>
-                    </View> }
+                    }
             />
         </View>
     );
