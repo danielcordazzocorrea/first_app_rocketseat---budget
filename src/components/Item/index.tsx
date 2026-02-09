@@ -16,6 +16,16 @@ type Props = TouchableOpacityProps & {
 }
 
 export function Item({name, quantity, discount, freight, status, onDelete, onEdit, onStatusChange}: Props) {
+
+    function total(){
+        const total = quantity * (1 - discount/100) + freight;
+        const totalFormatado = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        }).format(total);
+        return totalFormatado;
+    }
+
     return (
         <View style={styles.container}>
             <View>
@@ -23,6 +33,7 @@ export function Item({name, quantity, discount, freight, status, onDelete, onEdi
                      <StatusIcon status={status}/>
                  </TouchableOpacity>
                 <Text style={styles.name}>{name}</Text>
+                <Text style={styles.name}>Total:  {total()} </Text>
                 <Text>Quantidade: {quantity}</Text>
                 <Text>Desconto: {discount}</Text>
                 <Text>Frete: {freight}</Text>

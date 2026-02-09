@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
 
     emptyContainer: {
         flex: 1,
-        marginTop: -60,
+        marginTop: -70,
         alignItems: "center",
         justifyContent: "center",
         gap: 20,
@@ -40,5 +40,21 @@ export const styles = StyleSheet.create({
     filters: {
         flexDirection: 'row',
         gap: 10,
-    }
+    },
+    modal: {
+        position: 'absolute',
+        height: '70%',
+        width: '100%',
+        top: '30%',
+        backgroundColor: '#eaeaea',
+        padding: 30,
+        borderTopEndRadius: 20,
+        borderTopStartRadius: 20,
+        gap: 10,
+  },
+  title: {
+        fontSize: 24,
+        textAlign: 'center',
+        margin: 10,
+    },
 });

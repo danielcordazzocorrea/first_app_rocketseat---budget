@@ -67,9 +67,23 @@ async function change(updatedItem: ItemStorageType) {
     }
 }
 
+async function update(id: string, name: string, quantity: number, discount: number, freight: number): Promise <ItemStorageType[]> {
+    try {
+        const items = await get()
+        const updated = items.map(item =>
+            item.id === id ? { ...item, name, quantity, discount, freight } : item
+        )
+        await save(updated)
+        return updated
+    } catch (error) {
+        throw error
+    }
+}
+
 export const ItemStorage = {
     get,
     add,
     remove,
     change,
+    update,
 }

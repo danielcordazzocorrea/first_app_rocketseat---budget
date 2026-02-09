@@ -23,6 +23,18 @@ export function Add({navigation}: BottomRoutesProps<'add'>) {
         if (!name || !quantity) {
             return Alert.alert("Erro", "Preencha todos os campos obrigatórios.");
         }
+        if (discount && isNaN(Number(discount))) {
+            return Alert.alert("Erro", "Desconto deve ser um número.");
+        }
+        if (Number(discount) >= 100) {
+            return Alert.alert("Erro", "Desconto não pode ser maior ou igual a 100%.");
+        }
+        if (quantity && isNaN(Number(quantity))) {
+            return Alert.alert("Erro", "Quantidade deve ser um número.");
+        }
+        if (freight && isNaN(Number(freight))) {
+            return Alert.alert("Erro", "Frete deve ser um número.");
+        }
         try{
             const item: ItemStorageType = {
                 id: Math.random().toString(36).substring(2, 9),
@@ -50,7 +62,7 @@ export function Add({navigation}: BottomRoutesProps<'add'>) {
             <View style={ styles.form }>
                 <Input placeholder="Nome do item*" onChangeText={setName}/>
                 <Input placeholder="Quantidade*" keyboardType="numeric" onChangeText={setQuantity}/>
-                <Input placeholder="Desconto" keyboardType="numeric" onChangeText={setDiscount}/>
+                <Input placeholder="Desconto (%)" keyboardType="numeric" onChangeText={setDiscount}/>
                 <Input placeholder="Frete" keyboardType="numeric" onChangeText={setFreight}/>
                 <AddProduct title="Adicionar" onPress={onAdd}/>
             </View>
